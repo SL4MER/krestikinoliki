@@ -2,6 +2,13 @@
 
 using namespace std;
 
+bool Draw(int* i) {
+	if (*i == 8)
+		return 1;
+	return 0;
+}
+
+
 bool Win(char a[3][3]) {
 	for (int i = 0; i < 3; i++) {
 		if (a[i][0] == a[i][1] && a[i][1] == a[i][2] && a[i][0] != ' ')
@@ -67,7 +74,7 @@ int main() {
 				break;
 			}
 		}
-
+		if (Draw(&i)) cout << "НИЧЬЯ \n";
 	}
 
 
