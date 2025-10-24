@@ -32,7 +32,7 @@ void Rules() {
 }
 
 
-int Inputcorrectness(char a, int* i, int x, int y) {
+int Inputcorrectness(char a, int* i) {
 	if (a == 'x' || a == '0'){
 		cout << "\nПРЕДУПРЕЖДЕНИЕ: Данное поле уже занято, выберите другое\n";
 		return (*i)--;
@@ -50,34 +50,43 @@ void PrintArr(char a[3][3]) {
 
 int main() {
 	setlocale(LC_ALL, "");
-	
-	Rules();
 
-	char a[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
-	char X = 'x', O = '0';
+	bool restart;
+
+	do {
+		Rules();
+
+		char a[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
+		char X = 'x', O = '0';
 
 
 
-	for (int i = 0; i < 9; i++) {
-		int x, y;
-		cout << "Введите номер строки: ";
-		cin >> x;
-		cout << "Введите номер столбца: ";
-		cin >> y;
-		Inputcorrectness(a[x - 1][y - 1], &i, x, y);
-		cout << endl;
-		a[x - 1][y - 1] = (i % 2 == 0) ? X : O;
-		PrintArr(a);
-		if (i > 3) {
-			if (Win(a) == true) {
-				cout << "ПОБЕДИЛ ИГРОК " << (i) % 2 + 1 << endl;
-				break;
+		for (int i = 0; i < 9; i++) {
+			int x, y;
+			cout << "Введите номер строки: ";
+			cin >> x;
+			cout << "Введите номер столбца: ";
+			cin >> y;
+			Inputcorrectness(a[x - 1][y - 1], &i);
+			cout << endl;
+			a[x - 1][y - 1] = (i % 2 == 0) ? X : O;
+			PrintArr(a);
+			if (i > 3) {
+				if (Win(a) == true) {
+					cout << "ПОБЕДИЛ ИГРОК " << (i) % 2 + 1 << endl;
+					break;
+				}
 			}
+			if (Draw(&i)) cout << "НИЧЬЯ \n";
 		}
-		if (Draw(&i)) cout << "НИЧЬЯ \n";
-	}
 
+		cout << "\nХотите сыграть еще раз? (1 - да, 0 - нет): ";
+		cin >> restart;
+		cout << endl;
 
+	} while (restart);
+
+	cout << "Спасибо за игру!" << endl;
 
 	return 0;
 }
